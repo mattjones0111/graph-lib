@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace GraphLibrary
 {
-    public class KShortestPathAlgorithm : IKShortestPathAlgorithm
+    public class KShortestPathAlgorithm : IFindShortestPaths
     {
         #region Public methods
 

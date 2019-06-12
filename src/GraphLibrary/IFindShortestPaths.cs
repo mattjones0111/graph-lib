@@ -1,6 +1,6 @@
 ﻿namespace GraphLibrary
 {
-    public interface IKShortestPathAlgorithm
+    public interface IFindShortestPaths
     {
         TEdge[][] FindShortestPaths<TEdge, TVertex>(
             Graph<TEdge, TVertex> graph,

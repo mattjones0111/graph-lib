@@ -48,7 +48,7 @@
     <Compile Include="EdgePositionKey.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="IEdge.cs" />
-    <Compile Include="IKShortestPathAlgorithm.cs" />
+    <Compile Include="IFindShortestPaths.cs" />
     <Compile Include="KShortestPathAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
