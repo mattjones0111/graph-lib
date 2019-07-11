@@ -62,7 +62,7 @@ namespace GraphLibrary
                         Array.IndexOf(Vertices, x.Head)));
         }
 
-        public Dictionary<EdgePositionKey, TEdge> EdgePositionDictionary
+        Dictionary<EdgePositionKey, TEdge> EdgePositionDictionary
         {
             get;
         }
@@ -90,6 +90,32 @@ namespace GraphLibrary
         public int[] Weights
         {
             get;
+        }
+
+        /// <summary>
+        ///    Builds a path (represented by a collection of edges) from
+        ///    the found path integer array.
+        /// </summary>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="graph"></param>
+        /// <param name="resultPathArray"></param>
+        /// <param name="pathNumber"></param>
+        /// <returns></returns>
+        public TEdge[] BuildResultFromPath(int[,] resultPathArray, int pathNumber)
+        {
+            var numberOfVerticesVisited = resultPathArray[pathNumber, 0];
+            var result = new TEdge[numberOfVerticesVisited - 1];
+
+            for (var i = 2; i <= numberOfVerticesVisited; i++)
+            {
+                var tailPosition = resultPathArray[pathNumber, i - 1] - 1;
+                var headPosition = resultPathArray[pathNumber, i] - 1;
+
+                result[i-2] = EdgePositionDictionary[new EdgePositionKey(tailPosition, headPosition)];
+            }
+
+            return result;
         }
     }
 }

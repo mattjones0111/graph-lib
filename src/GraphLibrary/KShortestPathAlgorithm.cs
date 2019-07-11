@@ -8,8 +8,9 @@ namespace GraphLibrary
         #region Public methods
 
         /// <summary>
-        /// Returns a collection of edges that represent the ranked shortest paths between origin 
-        /// and destination vertices, bounded by numberOfPaths value.
+        ///     Returns a collection of edges that represent the ranked
+        ///     shortest paths between origin and destination vertices,
+        ///     bounded by numberOfPaths value.
         /// </summary>
         /// <typeparam name="TEdge">The type of a graph edge.</typeparam>
         /// <typeparam name="TVertex">The type of a graph vertex.</typeparam>
@@ -17,7 +18,10 @@ namespace GraphLibrary
         /// <param name="origin">The origin vertex.</param>
         /// <param name="destination">The destination vertex.</param>
         /// <param name="numberOfPaths">The maximum number of paths to return.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///     A collection of TEdge arrays that represent the ranked
+        ///     shortest routes through the graph.
+        /// </returns>
         public TEdge[][] FindShortestPaths<TEdge, TVertex>(
             Graph<TEdge, TVertex> graph,
             TVertex origin,
@@ -39,8 +43,10 @@ namespace GraphLibrary
         }
 
         /// <summary>
-        /// Returns a collection of edges that represent the ranked shortest paths between origin 
-        /// and destination vertices, bounded by numberOfPaths value.
+        ///     Returns a collection of edges that represent the ranked
+        ///     shortest paths between origin and destination vertices,
+        ///     bounded by numberOfPaths value. Allows the weights to be
+        ///     overridden.
         /// </summary>
         /// <typeparam name="TEdge">The type of a graph edge.</typeparam>
         /// <typeparam name="TVertex">The type of a graph vertex.</typeparam>
@@ -49,7 +55,10 @@ namespace GraphLibrary
         /// <param name="origin">The origin vertex.</param>
         /// <param name="destination">The destination vertex.</param>
         /// <param name="numberOfPaths">The maximum number of paths to return.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///     A collection of TEdge arrays that represent the ranked
+        ///     shortest routes through the graph.
+        /// </returns>
         public TEdge[][] FindShortestPaths<TEdge, TVertex>(
             Graph<TEdge, TVertex> graph,
             int[] overrideWeights,
@@ -95,40 +104,7 @@ namespace GraphLibrary
 
             for (var i = 1; i <= numberOfReturnPaths; i++)
             {
-                result[i-1] = BuildResultFromPath(graph, resultPathArray, i);
-            }
-
-            return result;
-        }
-
-        #endregion
-
-        #region Helper methods
-
-        /// <summary>
-        ///    Builds a path (represented by a collection of edges) from
-        ///    the found path integer array.
-        /// </summary>
-        /// <typeparam name="TEdge"></typeparam>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <param name="graph"></param>
-        /// <param name="resultPathArray"></param>
-        /// <param name="pathNumber"></param>
-        /// <returns></returns>
-        public TEdge[] BuildResultFromPath<TEdge, TVertex>(Graph<TEdge, TVertex> graph,
-            int[,] resultPathArray,
-            int pathNumber)
-            where TEdge : class, IEdge<TVertex>
-        {
-            var numberOfVerticesVisited = resultPathArray[pathNumber, 0];
-            var result = new TEdge[numberOfVerticesVisited - 1];
-
-            for (var i = 2; i <= numberOfVerticesVisited; i++)
-            {
-                var tailPosition = resultPathArray[pathNumber, i - 1] - 1;
-                var headPosition = resultPathArray[pathNumber, i] - 1;
-
-                result[i-2] = graph.EdgePositionDictionary[new EdgePositionKey(tailPosition, headPosition)];
+                result[i-1] = graph.BuildResultFromPath(resultPathArray, i);
             }
 
             return result;
@@ -139,7 +115,7 @@ namespace GraphLibrary
         #region Low level k-shortest path finding method
 
         /// <summary>
-        /// Low-level K-shortest path algorithm.
+        ///     Low-level K-shortest path algorithm.
         /// </summary>
         /// <param name="n">Number of unique nodes</param>
         /// <param name="m">Number of edges</param>
@@ -150,7 +126,7 @@ namespace GraphLibrary
         /// <param name="source">Origin node</param>
         /// <param name="sink">Destination node</param>
         /// <param name="path">Output parameter. The result.</param>
-        public void FindShortestPaths(int n, int m, int[] nodei, int[] nodej, int[] weight,
+        void FindShortestPaths(int n, int m, int[] nodei, int[] nodej, int[] weight,
             int k, int source, int sink, ref int[,] path)
         {
             // safeguards
